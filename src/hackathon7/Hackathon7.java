@@ -44,8 +44,12 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener,MouseLis
     private static final long serialVersionUID = 1L;
     private Image dbImage; // Imagen a proyectar.
     private Graphics dbg; // Objeto grafico
+    private Image obst;
+    private LinkedList<Obstaculos> lista; //Lista para guardar los bloques 
      public Hackathon7() {
-       
+        lista = new LinkedList();
+        URL eaURL = this.getClass().getResource("ImagenesObst/tube.png");
+        obst = Toolkit.getDefaultToolkit().getImage(eaURL);
         addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
