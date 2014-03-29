@@ -243,6 +243,7 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener, MouseLi
     public void paint1(Graphics g) {
         g.setColor(Color.YELLOW);
         g.setFont(new Font("default", Font.BOLD, 20));
+        g.drawImage(principal.getImageI(), principal.getPosX(), principal.getPosY(),this);
          //Imagen de fondo
 
     }
