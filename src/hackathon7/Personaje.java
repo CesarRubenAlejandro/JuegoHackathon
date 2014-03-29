@@ -37,11 +37,11 @@ public class Personaje extends Base {
         Image freezer2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Personaje/frame_001.gif"));
         Image freezer3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Personaje/frame_002.gif"));
         Image freezer4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Personaje/frame_003.gif"));
-        animacion = new Animacion();
-        animacion.sumaCuadro(freezer1, 300);
-        animacion.sumaCuadro(freezer2, 300);
-        animacion.sumaCuadro(freezer3, 300);
-        animacion.sumaCuadro(freezer4, 300);
+        anima = new Animacion();
+        anima.sumaCuadro(freezer1, 300);
+        anima.sumaCuadro(freezer2, 300);
+        anima.sumaCuadro(freezer3, 300);
+        anima.sumaCuadro(freezer4, 300);
        
         move = false;
         clickable = true;
