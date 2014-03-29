@@ -17,6 +17,9 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+         Hackathon7 juego = new Hackathon7();
+        //Despliega la ventana en pantalla al hacerla visible
+        juego.setVisible(true);
     }
     
 }

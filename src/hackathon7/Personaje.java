@@ -13,7 +13,7 @@ import java.awt.Toolkit;
  */
 public class Personaje extends Base {
    
-    
+    private boolean salta;
     /**
      * Metodo constructor que hereda los atributos de la clase
      * <code>Base</code>.
@@ -25,6 +25,7 @@ public class Personaje extends Base {
 
     public Personaje (int posX, int posY) {
         super(posX, posY);
+        salta = false;
 
         Image freezer1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Personaje/frame_000.gif"));
         Image freezer2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Personaje/frame_001.gif"));
@@ -37,5 +38,12 @@ public class Personaje extends Base {
         anima.sumaCuadro(freezer4, 300);
        
 
+    }
+    
+    public void setSalta(){
+        salta = !salta;
+    }
+    public boolean getSalta(){
+        return salta;
     }
 }
