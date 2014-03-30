@@ -46,23 +46,28 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener, MouseLi
      private Obstaculos obs1;
     private LinkedList<Obstaculos> lista; //Lista para guardar los bloques 
     private long tiempoActual; //Variables de control de tiempo de la animacion
+    private int tiempoCaida;
+    private int posYinicial;
 
     public Hackathon7() {
        
         setTitle("24H");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(200, 200);
-        this.setSize(600, 800); //tamaño del jframe
+        this.setSize(800, 600); //tamaño del jframe
         addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
     
         principal = new Personaje(100, 100);
-        obs1 = new Obstaculos(500, 800);
+        principal.setPosY(getHeight()-principal.getAlto());
+        obs1 = new Obstaculos(500, 500);
         lista = new LinkedList();
         Image freezer1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("ImagenesObst/tube.png"));
         obs1.getAnima().sumaCuadro(freezer1, 300);
-        obs1.setPosY(800 - obs1.getAlto());
+        obs1.setPosY(getHeight() - obs1.getAlto());
+        posYinicial = principal.getPosY();
+        tiempoCaida = 0;
             // Declaras un hilo
         Thread th = new Thread(this);
         // Empieza el hilo
@@ -87,7 +92,6 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener, MouseLi
     public void run() {
         //Guarda el tiempo actual del sistema
         tiempoActual = System.currentTimeMillis();
-        System.out.println("Entre a run");
 
         while (true) {
             actualiza();
@@ -111,7 +115,6 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener, MouseLi
         long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
         //Guarda el tiempo actual
         tiempoActual += tiempoTranscurrido;
-        System.out.println("Tiempo Actual:"+ tiempoActual);
         obs1.setPosX(obs1.getPosX() - 15);
         principal.actualiza(tiempoActual);
         
@@ -119,10 +122,25 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener, MouseLi
             obs1.setPosX(700);
         }
         
+        //Salto del personaje principal
+        tiempoCaida++;
+        if (principal.getSalta()){
+           // tiempoCaida = 0;
+            principal.setVelocidad(20);
+            int aux = (principal.getVelocidad() * tiempoCaida) - (4 * tiempoCaida * tiempoCaida) / 2;
+            principal.setPosY(principal.getPosY() - aux);
+            
+        }
+        
     }
 
     public void checaColision() {
-
+         //Checa colision del principal con el fondo del JFrame
+        if ( (principal.getSalta()) && ( principal.getPosY() > getHeight()) ){
+            principal.setSalta();
+            principal.setVelocidad(0);
+            principal.setPosY(posYinicial);
+        }
     }
 
     /**
@@ -159,7 +177,10 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener, MouseLi
      * @param e es el <code>evento</code> que se genera en al soltar las teclas.
      */
     public void keyReleased(KeyEvent e) {
-
+        if (e.getKeyCode() == KeyEvent.VK_UP && !principal.getSalta()){
+            principal.setSalta();
+            tiempoCaida = 0;
+        }
     }
 
     /**
