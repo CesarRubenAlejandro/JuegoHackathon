@@ -12,15 +12,8 @@ import java.awt.Toolkit;
  * @author Maribel
  */
 public class Personaje extends Base {
-    private boolean move;
-    private boolean clickable;
-    private int velocidad = ((int) (Math.random() * 6 + 3));  //genera la velocidad entre 3 y 6
-    private static int score = 0;
-    private int xDir = 1, yDir = -1;
-    private int x = 490;
-    private int y = 290;
-    private int aux = 1;
-    
+   
+    private boolean salta;
     /**
      * Metodo constructor que hereda los atributos de la clase
      * <code>Base</code>.
@@ -32,6 +25,7 @@ public class Personaje extends Base {
 
     public Personaje (int posX, int posY) {
         super(posX, posY);
+        salta = false;
 
         Image freezer1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Personaje/frame_000.gif"));
         Image freezer2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Personaje/frame_001.gif"));
@@ -43,64 +37,13 @@ public class Personaje extends Base {
         anima.sumaCuadro(freezer3, 300);
         anima.sumaCuadro(freezer4, 300);
        
-        move = false;
-        clickable = true;
-    }
 
-    /**
-     * Metodo que genera un numero al azar que servira como velocidad.
-     *
-     * @return un numero al azar entre 1 y 10.
-     */
-    public int getVelocidad() {
-        return velocidad;
-    }
- 
-
-    /**
-     * Metodo que permite obtener el score.
-     *
-     * @return la cantidad de colisiones.
-     */
-    public int getScore() {
-        return score;
     }
     
-    public void setMove(boolean x) {
-        move = x;
+    public void setSalta(){
+        salta = !salta;
     }
-    
-    public boolean getMove() {
-        return move;
+    public boolean getSalta(){
+        return salta;
     }
-    
-    public void setClickable(boolean x) {
-        clickable = x;
-    }
-    
-    public boolean getClickable () {
-        return clickable;
-    }
-    
-    /**
-     * Metodo que permite aumentar el score en 1.
-     *
-     */
-    public void aumentaScore() {
-        score+=2;
-    }
-    
-    public void move(){
-        x += xDir;
-        y += yDir;
-        
-                
-    }
-    public void reset(){
-        x = 490;
-        y = 290;
-        xDir = 1;
-        yDir = -1;
-    }
-
 }

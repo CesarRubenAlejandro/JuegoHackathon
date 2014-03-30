@@ -14,6 +14,10 @@ import java.awt.Toolkit;
 public class Obstaculos extends Base {
      public Obstaculos (int posX, int posY) {
         super(posX, posY);
-
+        anima = new Animacion();
+       
     }
+     public Animacion getAnima(){
+         return anima;
+     }
 }
