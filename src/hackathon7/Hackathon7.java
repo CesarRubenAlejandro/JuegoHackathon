@@ -43,11 +43,18 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener, MouseLi
     private Image dbImage; // Imagen a proyectar.
     private Graphics dbg; // Objeto grafico
     private Personaje principal;
-     private Obstaculos obs1;
-    private LinkedList<Obstaculos> lista; //Lista para guardar los bloques 
+   
     private long tiempoActual; //Variables de control de tiempo de la animacion
     private int tiempoCaida;
     private int posYinicial;
+    private Obstaculos obs1;
+    private Obstaculos obs2;
+    private Obstaculos obs3;
+    private Obstaculos obs4;
+    private Obstaculos obs5;
+    private Obstaculos obs6;
+    private LinkedList<Obstaculos> listaAbajo; //Lista para guardar los bloques 
+    private LinkedList<Obstaculos> listaArriba; //Lista para guardar los bloques 
 
     public Hackathon7() {
        
@@ -61,11 +68,49 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener, MouseLi
     
         principal = new Personaje(100, 100);
         principal.setPosY(getHeight()-principal.getAlto());
-        obs1 = new Obstaculos(500, 500);
-        lista = new LinkedList();
+
+        obs1 = new Obstaculos(800, 800);
+        obs2 = new Obstaculos(950, 800);
+        obs3 = new Obstaculos (1100, 800);
+        
+        obs4 = new Obstaculos(800, 0);
+        obs5 = new Obstaculos(1000, 0);
+        obs6 = new Obstaculos (1300, 0);
+        
+        listaAbajo = new LinkedList();
+        listaArriba = new LinkedList();
+        
         Image freezer1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("ImagenesObst/tube.png"));
         obs1.getAnima().sumaCuadro(freezer1, 300);
-        obs1.setPosY(getHeight() - obs1.getAlto());
+        Image freezer2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("ImagenesObst/tube.png"));
+        obs2.getAnima().sumaCuadro(freezer2,300);
+        Image freezer3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("ImagenesObst/tube.png"));
+        obs3.getAnima().sumaCuadro(freezer3,300);
+        
+        Image freezer4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("ImagenesObst/tube.png"));
+        obs4.getAnima().sumaCuadro(freezer4, 300);
+        Image freezer5 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("ImagenesObst/tube.png"));
+        obs5.getAnima().sumaCuadro(freezer5,300);
+        Image freezer6 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("ImagenesObst/tube.png"));
+        obs6.getAnima().sumaCuadro(freezer6,300);
+        
+        obs1.setPosY(600 - obs1.getAlto());
+        obs2.setPosY(600 - obs2.getAlto());
+        obs3.setPosY(600 - obs3.getAlto());
+        
+        obs4.setPosY(0 + obs4.getAlto());
+        obs5.setPosY(0 + obs5.getAlto());
+        obs6.setPosY(0 + obs6.getAlto());
+        
+        listaAbajo.add(obs1);
+        listaAbajo.add(obs2);
+        listaAbajo.add(obs3);
+        
+        listaArriba.add(obs4);
+        listaArriba.add(obs5);
+        listaArriba.add(obs6);
+        
+        
         posYinicial = principal.getPosY();
         tiempoCaida = 0;
             // Declaras un hilo
@@ -115,11 +160,28 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener, MouseLi
         long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
         //Guarda el tiempo actual
         tiempoActual += tiempoTranscurrido;
-        obs1.setPosX(obs1.getPosX() - 15);
+        //obs1.setPosX(obs1.getPosX() - 15);
         principal.actualiza(tiempoActual);
         
-        if(obs1.getPosX() <= 0){
-            obs1.setPosX(700);
+       // if(obs1.getPosX() <= 0){
+        //    obs1.setPosX(700);
+        //}
+        for (int i = 0; i < listaAbajo.size(); i++) {
+            if (((Obstaculos) listaAbajo.get(i)).getPosX() <= 0) {
+  
+                ((Obstaculos) listaAbajo.get(i)).setPosX(900);
+               
+            }
+            ((Obstaculos) listaAbajo.get(i)).setPosX(listaAbajo.get(i).getPosX() - 15);
+        }
+        
+           for (int i = 0; i < listaArriba.size(); i++) {
+            if (((Obstaculos) listaArriba.get(i)).getPosX() <= 0) {
+  
+                ((Obstaculos) listaArriba.get(i)).setPosX(900);
+               
+            }
+            ((Obstaculos) listaArriba.get(i)).setPosX(listaArriba.get(i).getPosX() - 15);
         }
         
         //Salto del personaje principal
@@ -285,6 +347,12 @@ public class Hackathon7 extends JFrame implements Runnable, KeyListener, MouseLi
         
         g.drawImage(principal.getImagenI(), principal.getPosX(), principal.getPosY(),this);
         g.drawImage(obs1.getImagenI(),obs1.getPosX(), obs1.getPosY(),this);
+         for(int i = 0; i < listaAbajo.size(); i++){
+             g.drawImage(listaAbajo.get(i).getImagenI(), listaAbajo.get(i).getPosX(),listaAbajo.get(i).getPosY(), this);
+        }
+          for(int i = 0; i < listaArriba.size(); i++){
+             g.drawImage(listaArriba.get(i).getImagenI(), listaArriba.get(i).getPosX(),listaArriba.get(i).getPosY(), this);
+        }
       
     }
 
